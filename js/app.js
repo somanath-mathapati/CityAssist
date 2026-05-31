@@ -190,9 +190,9 @@ async function loadPlaces() {
     const response =
       await fetch(
 
-        `http://localhost:3000/places?city=${encodeURIComponent(city)}&category=${encodeURIComponent(category)}`
+  `/places?city=${encodeURIComponent(city)}&category=${encodeURIComponent(category)}`
 
-      );
+);
 
     const places =
       await response.json();
