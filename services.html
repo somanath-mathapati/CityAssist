@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>City Services</title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  />
+
+  <!-- GOOGLE FONT -->
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <header class="navbar">
+
+    <div class="logo-section">
+
+      <h2 class="logo">
+        CITYASSIST
+      </h2>
+
+    </div>
+
+    <nav class="nav-links">
+
+      <a href="index.html" onclick="clearLocation()">Home</a>
+
+      <a href="services.html">
+        Services
+      </a>
+
+      <a href="about.html">
+        About
+      </a>
+
+      <a href="contact.html">
+        Contact
+      </a>
+
+    </nav>
+
+  </header>
+
+  <!-- PAGE TITLE -->
+
+  <section class="services-page">
+
+    <h1 class="service-title">
+      Explore City Services
+    </h1>
+
+    <p class="service-subtitle">
+
+      Find nearby hospitals,
+      restaurants, salons,
+      garages, cafes and more.
+
+    </p>
+
+    <!-- SERVICE CARDS -->
+
+    <div class="services-container">
+
+      <!-- HOSPITAL -->
+
+      <div
+        class="card"
+        onclick="openCategory('hospital')"
+      >
+
+        <img
+          src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=1200&auto=format&fit=crop"
+          alt="hospital"
+        />
+
+        <div class="card-content">
+
+          <h2>Hospitals</h2>
+
+          <p>
+            Find top hospitals
+            and emergency care.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- RESTAURANTS -->
+
+      <div
+        class="card"
+        onclick="openCategory('restaurant')"
+      >
+
+        <img
+          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop"
+          alt="restaurant"
+        />
+
+        <div class="card-content">
+
+          <h2>Restaurants</h2>
+
+          <p>
+            Discover famous
+            restaurants nearby.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- CAFES -->
+
+      <div
+        class="card"
+        onclick="openCategory('cafe')"
+      >
+
+        <img
+          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop"
+          alt="cafe"
+        />
+
+        <div class="card-content">
+
+          <h2>Cafes</h2>
+
+          <p>
+            Relax and enjoy
+            premium cafes.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- GARAGES -->
+
+      <div
+        class="card"
+        onclick="openCategory('garage')"
+      >
+
+        <img
+          src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=1200&auto=format&fit=crop"
+          alt="garage"
+        />
+
+        <div class="card-content">
+
+          <h2>Garages</h2>
+
+          <p>
+            Nearby car repair
+            and service centers.
+          </p>
+
+        </div>
+
+      </div>
+      <!-- PETROL PUMPS -->
+
+<div
+  class="card"
+  onclick="openCategory('petrol')"
+>
+
+  <img
+src="https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=1200&auto=format&fit=crop"
+    alt="petrol pump"
+  />
+
+  <div class="card-content">
+
+    <h2>Petrol Pumps</h2>
+
+    <p>
+      Nearby fuel stations
+      and CNG service points.
+    </p>
+
+  </div>
+
+</div>
+
+   
+
+      <!-- SALONS -->
+
+      <div
+        class="card"
+        onclick="openCategory('salon')"
+      >
+
+        <img
+          src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=1200&auto=format&fit=crop"
+          alt="salon"
+        />
+
+        <div class="card-content">
+
+          <h2>Salons</h2>
+
+          <p>
+            Explore beauty and
+            grooming salons.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- JS -->
+
+  <script src="js/app.js">
+    
+  </script>
+  
+<script>
+
+const state = localStorage.getItem("state");
+const city = localStorage.getItem("city");
+
+if (!state || !city) {
+
+    alert("Please select State and City first!");
+
+    window.location.href = "index.html";
+
+}
+
+</script>
+
+
+
+
+
+</body>
+
+
+</html>
