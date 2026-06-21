@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favorites</title>
+    <link rel="stylesheet" href="style.css">
+  <style>
+body{
+    background:rgb(226, 216, 216);
+}
+</style>  
+</head>
+<body>
+
+<div class="favorites-page">
+    <h1>❤️ My Favorites</h1>
+    <div id="favoritesContainer" class="favorites-grid"></div>
+</div>
+
+<script>
+const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+const container = document.getElementById("favoritesContainer");
+
+if(favorites.length===0){
+    container.innerHTML="<h2>No favorites yet ❤️</h2>";
+}else{
+    favorites.forEach(place=>{
+        container.innerHTML += `
+        <div class="favorite-card">
+            <h2>${place.name}</h2>
+            <p>📍 ${place.address}</p>
+            <p>⭐ ${place.rating}</p>
+            <p>👥 ${place.reviews}</p>
+        </div>
+        `;
+    });
+}
+</script>
+
+</body>
+</html>

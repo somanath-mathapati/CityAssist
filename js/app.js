@@ -179,21 +179,23 @@ async function loadPlaces() {
 
   }
 
-  container.innerHTML =
-
-    `<h2 style="text-align:center;">
-      Loading places...
-    </h2>`;
-
+ container.innerHTML = `
+  <div class="loading-box">
+      <div class="spinner"></div>
+      <p>Loading Places...</p>
+  </div>
+`;
   try {
 
-    const response =
-      await fetch(
+   const API_BASE =
+  window.location.hostname === "127.0.0.1" ||
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000"
+    : "";
 
-  `/places?city=${encodeURIComponent(city)}&category=${encodeURIComponent(category)}`
-
+const response = await fetch(
+  `${API_BASE}/places?city=${encodeURIComponent(city)}&category=${encodeURIComponent(category)}`
 );
-
     const places =
       await response.json();
 
@@ -216,11 +218,11 @@ async function loadPlaces() {
 
     }
 
-    places.forEach(place => {
+   places.forEach((place, index) => {
 
       container.innerHTML += `
 
-      <div class="place-card">
+     <div class="place-card" style="animation-delay:${index * 0.15}s;">
 
         
 
@@ -228,7 +230,9 @@ async function loadPlaces() {
 
           <h2>
             ${place.name}
-          </h2>
+       <span onclick='addToFavorites(${JSON.stringify(place)})' class="fav-icon">
+    ♡
+</span>
 
           <p>
             📍 ${place.address}
@@ -244,6 +248,9 @@ async function loadPlaces() {
             ${place.reviews}
           </p>
 
+    <button onclick="bookSlot('${place.name}')" class="book-btn">
+  Book Slot
+</button>     
           <a
             href="${place.mapLink}"
             target="_blank"
@@ -254,6 +261,7 @@ async function loadPlaces() {
             </button>
 
           </a>
+          
 
         </div>
 
@@ -313,6 +321,108 @@ function checkServicesAccess() {
 
     window.location.href = "services.html";
 }
+function filterPlaces() {
 
+  const input = document.getElementById("searchInput");
+  const filter = input.value.toLowerCase();
 
+  const cards = document.querySelectorAll(".place-card");
 
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+
+    if (text.includes(filter)) {
+      card.style.display = "";
+    } else {
+      card.style.display = "none";
+    }
+  });
+
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+
+    if(document.body.classList.contains("dark-mode")){
+        localStorage.setItem("theme", "dark");
+    } else {
+        localStorage.setItem("theme", "light");
+    }
+}
+
+window.onload = function () {
+    if(localStorage.getItem("theme") === "dark"){
+        document.body.classList.add("dark-mode");
+    }
+}
+async function loadWeather() {
+
+    const weatherBox = document.getElementById("weatherBox");
+
+    if (!weatherBox) return;
+
+    const city = localStorage.getItem("city");
+
+    if (!city) {
+        weatherBox.innerHTML = "City not selected";
+        return;
+    }
+
+    try {
+        const apiKey = "ebb10aeff45fbcebb571ef974a16231d";
+
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
+
+        const data = await response.json();
+
+       weatherBox.innerHTML = `
+    <h2>🌤 ${city}</h2>
+    <p>🌡 ${data.main.temp}°C</p>
+    <p>💧 Humidity: ${data.main.humidity}%</p>
+    <p>🌬 Wind: ${data.wind.speed} m/s</p>
+`;
+
+    } catch (error) {
+        console.log(error);
+        weatherBox.innerHTML = "Weather unavailable";
+    }
+}
+loadWeather();
+function bookSlot(placeName) {
+    document.getElementById("bookingModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("bookingModal").style.display = "none";
+}
+
+function confirmBooking() {
+    const name = document.getElementById("customerName").value;
+    const phone = document.getElementById("customerPhone").value;
+    const date = document.getElementById("bookingDate").value;
+    const time = document.getElementById("bookingTime").value;
+
+    if (!name || !phone || !date || !time) {
+        alert("Please fill all details!");
+        return;
+    }
+
+    alert("✅ Booking Confirmed Successfully!");
+
+    setTimeout(() => {
+        alert("⏰ Reminder: Your slot starts in 5 minutes!");
+    }, 5000);
+
+    closeModal();
+}
+function addToFavorites(place) {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    favorites.push(place);
+
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+
+    alert("❤️ Added to Favorites!");
+}
